@@ -105,8 +105,13 @@ class QueryGenerator(object):
 				if(period_interval_inSec < 2592000):
 					if(period_interval_inSec < 604800):
 						if(period_interval_inSec < 86400):
-							duration = period_interval_inSec%3600
-							q.setInterval(startstring + "/pt" + str(duration) + "h")
+							if(period_interval_inSec < 86400):
+								duration = period_interval_inSec%60
+								q.setInterval(startstring + "/pt" + str(duration) + "m")
+							else:
+									
+								duration = period_interval_inSec%3600
+								q.setInterval(startstring + "/pt" + str(duration) + "h")
 							
 						else:
 							duration = period_interval_inSec%86400

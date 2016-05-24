@@ -98,18 +98,18 @@ runtime = config.getRunTime()
 filename = config.getfilename()
 print filename
 
-print "11"
+#print "11"
 
 numthreads = int(opspersecond * queryruntime)
 #numthreads = 1
 if(numthreads > numcores - 1):
 	print >> sys.stderr, "Cannot achieve desired throughput."
   	sys.exit(1)
-print "12"
+#print "12"
 timeAccessGenerator = DistributionFactory.createSegmentDistribution(accessdistribution)
-print "13"
+#print "13"
 periodAccessGenerator = DistributionFactory.createSegmentDistribution(perioddistribution)
-print "14"
+#print "14"
 newquery = PyDruid(config.getBrokerNodeUrl(), config.getBrokerEndpoint())
 tb = newquery.time_boundary(datasource=config.getDataSource())
 
@@ -120,7 +120,7 @@ start = datetime.strptime(start, '%Y-%m-%dT%H:%M:%S.%fZ')
 start = utc.localize(start)
 #start = dt.datetime(2016,5 , 23, 9, 24, 0)
 start = utc.localize(start)
-print "15"
+#print "15"
 minqueryperiod = 0
 maxqueryperiod = time-start
 x = maxqueryperiod.total_seconds()
@@ -148,18 +148,18 @@ def threadoperation(start, time, numqueries, timeAccessGenerator, minqueryperiod
 	currentSegRank = []
 	#oldest_timestamp = start.total_seconds()
 	break_flag =0
-	print "16"
+	#print "16"
 	while True:
 	#while break_flag <1:
 		break_flag =break_flag+1
-		print "1"
+		#print "1"
 		#if datetime.now() >= endtime:
 			#break
 
 		time = datetime.now(timezone('UTC'))
 		#newquerylist = QueryGenerator.generateQueries(start, time, numqueries, timeAccessGenerator, minqueryperiod, maxqueryperiod, periodAccessGenerator);
 		if(len(currentSegRank)==0):
-			print "4"
+			#print "4"
 			y = time - start
 			z = y.total_seconds()
 			x = dt.timedelta(seconds = z)
@@ -170,11 +170,11 @@ def threadoperation(start, time, numqueries, timeAccessGenerator, minqueryperiod
 		else:
 			#y = time.total_seconds()
 			#z = start.total_seconds()
-			print "2"
+			#print "2"
 			new_interval = (time-start).total_seconds()
-			print "time"
+			#print "time"
 			print time
-			print "start"
+			#print "start"
 			print start
 			print new_interval
 			for i in range(0, int(round(new_interval))):
@@ -198,7 +198,7 @@ def threadoperation(start, time, numqueries, timeAccessGenerator, minqueryperiod
 		#elif(accessdistribution == "dynamiczip"):
 			#newquerylist = QueryGenerator.generateQueries(start, time, numqueries, timeAccessGenerator, minqueryperiod, maxqueryperiod, periodAccessGenerator, currentSegRank)
 		else:
-			print "3"
+			#print "3"
 			newquerylist = QueryGenerator.generateQueries(start, time, numqueries, timeAccessGenerator, minqueryperiod, maxqueryperiod, periodAccessGenerator, currentSegRank)
 		line = applyOperation(newquerylist[0], config,logger)
 
