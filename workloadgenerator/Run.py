@@ -69,7 +69,6 @@ def randZipf(n, alpha, numSamples):
 def applyOperation(query, config, logger):
 		dbOpsHandler = DBOpsHandler(config)
 		if querytype == "timeseries":
-
 			return dbOpsHandler.timeseries(query, logger)
 		elif querytype == "topn":
 			return dbOpsHandler.topn(query, logger)
@@ -153,8 +152,8 @@ def threadoperation(start, time, numqueries, timeAccessGenerator, minqueryperiod
 	#while break_flag <1:
 		break_flag =break_flag+1
 		#print "1"
-		#if datetime.now() >= endtime:
-			#break
+		if datetime.now() >= endtime:
+			break
 
 		time = datetime.now(timezone('UTC'))
 		#newquerylist = QueryGenerator.generateQueries(start, time, numqueries, timeAccessGenerator, minqueryperiod, maxqueryperiod, periodAccessGenerator);

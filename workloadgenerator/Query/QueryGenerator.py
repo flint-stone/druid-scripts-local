@@ -5,6 +5,7 @@ import datetime as dt
 from datetime import *
 import json
 from pprint import pprint
+from random import randint
 
 class QueryGenerator(object):
 	queryRunningCount = 0
@@ -65,7 +66,8 @@ class QueryGenerator(object):
 	
 	
 	@staticmethod
-	def generateQueriesFromFile(start, time, accessGenerator, minPeriod, maxPeriod, periodGenerator, filename):
+	def generateQueriesFromFile(start, time, numQueries, accessGenerator, minPeriod, maxPeriod, periodGenerator, filename):
+		fulllist = list()
 		querylist = list()
 		y = time - start
 		z = y.total_seconds()
@@ -74,11 +76,11 @@ class QueryGenerator(object):
 		#json loads file			
 	   	with open(filename) as data_file:
 	   		data = json.load(data_file)
-   		numQueries = len(data)
+   		numEntries = len(data)
 		#accesslist = accessGenerator.generateDistribution(0, elapsed, numQueries)
 
 		#periodlist = periodGenerator.generateDistribution(minPeriod, maxPeriod, numQueries)
-		for i in xrange(numQueries):
+		for i in xrange(numEntries):
 			q = Query(QueryGenerator.queryRunningCount, elapsed)
 			QueryGenerator.queryRunningCount += 1
 			#starttime = accesslist[i]
@@ -129,11 +131,12 @@ class QueryGenerator(object):
 				duration = period_interval_inSec%31536000
 				q.setInterval(startstring + "/p" + str(duration) + "y")
 				
-			for x in range(0, 1):
-			#for x in range(0, period_count):
-				querylist.append(q)
-				print q.interval
+			for count1 in range(0, period_count):
+				fulllist.append(q)
+				print q.interval			
 			
 			#querylist.append(q)
-
+		querycount=len(fulllist)
+		for count2 in xrange(numQueries):
+			querylist.append(fulllist[randint(0,querycount-1)])
 		return querylist
